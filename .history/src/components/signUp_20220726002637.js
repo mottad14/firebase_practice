@@ -1,5 +1,5 @@
-import React, {useRef, useState} from 'react'
-import {Form, Button, Card, Alert} from "react-bootstrap"
+import React, {useRef} from 'react'
+import {Form, Button, Card} from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext";
 
 export default function SignUp() {
@@ -8,26 +8,13 @@ export default function SignUp() {
     const passwordConfirmRef = useRef();
     const { signup } = useAuth()
     const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
 
-
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault();
-        //Confirm password here
+        signup(emailRef.current.value, passwordRef.current.value)
         if (passwordRef.current.value !== passwordConfirmRef.current.value){
-            setError("Passwords do not match")
-            return (error)  
+
         }
-        //Because this is an asynchronous function, we have no error set, we initiate loading, and await confirmation from Firebase 
-        //on the signup process. If for some reason there is an error, we set the error. And loading is then set back to false.
-        try{
-            setError('')
-            setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value)
-        }   catch {
-            setError("Failed to create an account")
-        }
-        setLoading(false)
     }
 
   return (
@@ -35,8 +22,7 @@ export default function SignUp() {
         <Card>
             <Card.Body>
                 <h2 className='text-center mb-4'> Sign Up! </h2>
-                {error && <Alert variant="danger"> {error} </Alert>}
-                <Form onSubmit={handleSubmit}>
+                <Form>
                     <Form.Group id="email">
                         <Form.Label> Email </Form.Label>
                         <Form.Control type="email" ref={emailRef} required/>
@@ -51,7 +37,7 @@ export default function SignUp() {
                         <Form.Label> Password Confirmation </Form.Label>
                         <Form.Control type='password' ref={passwordConfirmRef} required/>
                     </Form.Group>
-                    <Button disabled={loading} className="w-100" type="submit">Sign Up</Button>
+                    <Button className="w-100" type="submit">Sign Up</Button>
                 </Form>
             </Card.Body>
         </Card>

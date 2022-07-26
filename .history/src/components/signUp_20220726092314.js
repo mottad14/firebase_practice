@@ -14,9 +14,8 @@ export default function SignUp() {
     async function handleSubmit(e) {
         e.preventDefault();
         //Confirm password here
-        if (passwordRef.current.value !== passwordConfirmRef.current.value){
-            setError("Passwords do not match")
-            return (error)  
+        if (passwordRef.current.value != passwordConfirmRef.current.value){
+            return ("Passwords do not match")
         }
         //Because this is an asynchronous function, we have no error set, we initiate loading, and await confirmation from Firebase 
         //on the signup process. If for some reason there is an error, we set the error. And loading is then set back to false.

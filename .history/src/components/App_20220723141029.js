@@ -6,7 +6,6 @@ import { AuthProvider } from "../contexts/AuthContext";
 function App() {
   return (
     <AuthProvider>
-
       <Container className="d-flex align-items-center justify-content-center"
       style={{minHeight: "100vh"}}>
 
