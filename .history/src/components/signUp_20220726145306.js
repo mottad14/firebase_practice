@@ -24,10 +24,12 @@ export default function SignUp() {
             setError('')
             setLoading(true)
             await signup(emailRef.current.value, passwordRef.current.value)
-        }   
-        catch {
+        }   catch( (error) =>  {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
             setError("Failed to create an account")
-        }
+        })
         setLoading(false)
     }
 

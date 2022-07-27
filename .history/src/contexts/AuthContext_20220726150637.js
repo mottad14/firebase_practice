@@ -13,8 +13,23 @@ export function AuthProvider({children}) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true)
 
-    function signup(email, password){
-        return auth.createUserWithEmailAndPassword(email, password)}
+    function signup (email, password){
+        return ( auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+    // Signed in 
+    var user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(errorCode, errorMessage)
+    // ..
+  }))
+        
+
+        
+    }
 
     useEffect (() => {
         const unsubscribe = auth.onAuthStateChanged(user=> {
@@ -33,7 +48,7 @@ export function AuthProvider({children}) {
 
   return (
     <AuthContext.Provider value={value}>
-        {children}
+        {!loading && children}
     </AuthContext.Provider>
 
 
